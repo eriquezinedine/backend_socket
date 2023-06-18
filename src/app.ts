@@ -6,9 +6,11 @@ import express from "express";
 class ServerExpress {
   app: Express;
   user: string;
+  defecto: string;
   constructor() {
     this.app = express();
     this.user = "/user";
+    this.defecto = "/";
     this.middleware();
     this.routes();
   }

@@ -10,6 +10,7 @@ class ServerExpress {
     constructor() {
         this.app = (0, express_1.default)();
         this.user = "/user";
+        this.defecto = "/";
         this.middleware();
         this.routes();
     }
