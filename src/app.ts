@@ -1,16 +1,17 @@
 import cors from "cors";
 import { Express } from "express";
 import userRoutes from "./routes/user.routes";
+import defaultRoutes from "./routes/default.routes";
 import express from "express";
 
 class ServerExpress {
   app: Express;
   user: string;
-  defecto: string;
+  default: string;
   constructor() {
     this.app = express();
     this.user = "/user";
-    this.defecto = "/";
+    this.default = "/";
     this.middleware();
     this.routes();
   }
@@ -24,6 +25,7 @@ class ServerExpress {
 
   routes() {
     this.app.use(this.user, userRoutes);
+    this.app.use(this.default, defaultRoutes);
   }
 
   get listen() {
