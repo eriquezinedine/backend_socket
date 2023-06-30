@@ -12,15 +12,21 @@ nameSocket.on("connection", (client) => {
   client.on("join-selection", async (data) => {
     console.log("Creando nuevo canal", data);
     // client.join(data)
-    // nameSocket.emit("canal", `${data}`);
   });
 
   client.on("connection_alumn", async (alumno: DataItem) => {
-    cacheData.push(alumno);
+    const index = cacheData.findIndex((item) => item.nombre === alumno.nombre);
+    if (index !== -1) {
+      cacheData[index].idColor = alumno.idColor;
+    } else {
+      cacheData.push(alumno);
+    }
     nameSocket.emit("list_alumn", JSON.stringify({ listAlumno: cacheData })); // Emito el mensaje a todos.
   });
 
   client.on("add_circle", async (data: CirclePosition) => {
+    console.log(data);
+
     const { idAlumno, offset } = data;
 
     const dataItemIndex = cacheData.findIndex((item) => item.id === idAlumno);
@@ -65,9 +71,7 @@ nameSocket.on("connection", (client) => {
     cacheData = [];
     nameSocket.emit("list_alumn", JSON.stringify({ listAlumno: cacheData })); // Emito el mensaje a todos.
   });
-  client.on("disconnect", () => {
-    console.log("cliente desconectado");
-    // Realiza cualquier acción necesaria cuando el cliente se desconecta.
-    // ...
+  client.on("disconnect", (data) => {
+    console.log("cliente desconectado", data);
   });
 });
